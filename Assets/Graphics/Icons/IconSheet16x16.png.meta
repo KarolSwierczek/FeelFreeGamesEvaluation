@@ -4,169 +4,169 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -8544533336862752243
-    second: Icon0
+    second: Wooden Sword
   - first:
       213: -7807161332036479052
-    second: Icon1
+    second: Wooden Bow
   - first:
       213: 5338652241743441893
-    second: Icon2
+    second: Wooden Spear
   - first:
       213: -7665281263893778840
-    second: Icon3
+    second: Wooden Shovel
   - first:
       213: 1487779594183530903
-    second: Icon4
+    second: Iron Broadsword
   - first:
       213: 7468289976042727830
-    second: Icon5
+    second: Iron Axe
   - first:
       213: 6820769813410882637
-    second: Icon6
+    second: Iron Pickaxe
   - first:
       213: -3279742117872160572
-    second: Icon7
+    second: Gold Shortsword
   - first:
       213: -6265298628459414769
-    second: Icon8
+    second: Wooden Arrow
   - first:
       213: 7266478274388947296
-    second: Icon9
+    second: Poison Arrow
   - first:
       213: 6980664719932009049
-    second: Icon10
+    second: Common Robe
   - first:
       213: 4268549285100173834
-    second: Icon11
+    second: Leather Armor
   - first:
       213: -6310973018702120587
-    second: Icon12
+    second: Iron Armor
   - first:
       213: -6212230038513801575
-    second: Icon13
+    second: Wooden Buckle
   - first:
       213: 3009735249486970456
-    second: Icon14
+    second: Leather Boots
   - first:
       213: -1595461972713800459
-    second: Icon15
+    second: Leather Cap
   - first:
       213: -857364419895609593
-    second: Icon16
+    second: Wooden Staff
   - first:
       213: -3168544315933664699
-    second: Icon17
+    second: Ruby Sceptre
   - first:
       213: 6212404884138481864
-    second: Icon18
+    second: Topaz Ring
   - first:
       213: 7943977233677286326
-    second: Icon19
+    second: Amulet of Defence
   - first:
       213: 2480338500323279018
-    second: Icon20
+    second: Lesser Health Potion
   - first:
       213: 6253190219968361791
-    second: Icon21
+    second: Greater Health Potion
   - first:
       213: 6727756309838369105
-    second: Icon22
+    second: Lesser Mana Potion
   - first:
       213: -8746214859731839394
-    second: Icon23
+    second: Lesser Stamina Potion
   - first:
       213: -206299594301408260
-    second: Icon24
+    second: Golden Coins
   - first:
       213: 3433394657650695008
-    second: Icon25
+    second: Ruby Gem
   - first:
       213: -2500702305080006631
-    second: Icon26
+    second: Wooden Chest
   - first:
       213: 5320517774998332641
-    second: Icon27
+    second: Key
   - first:
       213: -5566431984075802230
-    second: Icon28
+    second: Steak
   - first:
       213: 928456294393586306
-    second: Icon29
+    second: Apple
   - first:
       213: 746620672442621667
-    second: Icon30
+    second: Carrot
   - first:
       213: -8691526341175756621
-    second: Icon31
+    second: Cauliflower
   - first:
       213: 2801163623685492851
-    second: Icon32
+    second: Cooked Fish
   - first:
       213: 5407550567841518308
-    second: Icon33
+    second: Save Game
   - first:
       213: 1333053761545811678
-    second: Icon34
+    second: Settings
   - first:
       213: 7186826349982477561
-    second: Icon35
+    second: Dialog
   - first:
       213: -616002336605989141
-    second: Icon36
+    second: Health
   - first:
       213: 5474808229258360610
-    second: Icon37
+    second: Water Element
   - first:
       213: -1066037433735932345
-    second: Icon38
+    second: Earth Element
   - first:
       213: 7251791454232917450
-    second: Icon39
+    second: Fire Element
   - first:
       213: 4786229477907600837
-    second: Icon40
+    second: Quick Attack
   - first:
       213: -7407662508409666242
-    second: Icon41
+    second: Strong Attack
   - first:
       213: -1246110927749364155
-    second: Icon42
+    second: Stun
   - first:
       213: -8720346397527402517
-    second: Icon43
+    second: Block
   - first:
       213: 4541015004156227162
-    second: Icon44
+    second: Berserk
   - first:
       213: -7958398079076422368
-    second: Icon45
+    second: Detect
   - first:
       213: -7796000033961867744
-    second: Icon46
+    second: Enchancment
   - first:
       213: -1503242942973155062
-    second: Icon47
+    second: Bleed Effect
   - first:
       213: -4238791483459735894
-    second: Icon48
+    second: Improved Defence
   - first:
       213: 4617616008293604936
-    second: Icon49
+    second: Yellow Mushroom
   - first:
       213: -9078158522362960929
-    second: Icon50
+    second: Magic Eyeball
   - first:
       213: -3629439858615537566
-    second: Icon51
+    second: Slime
   - first:
       213: 6920973014161156316
-    second: Icon52
+    second: Bronze Frame
   - first:
       213: -4370801743423541224
-    second: Icon53
+    second: Silver Frame
   - first:
       213: -2029928063864113721
-    second: Icon54
+    second: Gold Frame
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -197,7 +197,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -211,7 +211,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -233,7 +233,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -245,7 +245,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -257,7 +257,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -268,7 +268,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon0
+      name: Wooden Sword
       rect:
         serializedVersion: 2
         x: 0
@@ -289,7 +289,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon1
+      name: Wooden Bow
       rect:
         serializedVersion: 2
         x: 16
@@ -310,7 +310,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon2
+      name: Wooden Spear
       rect:
         serializedVersion: 2
         x: 32
@@ -331,7 +331,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon3
+      name: Wooden Shovel
       rect:
         serializedVersion: 2
         x: 48
@@ -352,7 +352,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon4
+      name: Iron Broadsword
       rect:
         serializedVersion: 2
         x: 64
@@ -373,7 +373,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon5
+      name: Iron Axe
       rect:
         serializedVersion: 2
         x: 79
@@ -394,7 +394,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon6
+      name: Iron Pickaxe
       rect:
         serializedVersion: 2
         x: 96
@@ -415,7 +415,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon7
+      name: Gold Shortsword
       rect:
         serializedVersion: 2
         x: 112
@@ -436,7 +436,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon8
+      name: Wooden Arrow
       rect:
         serializedVersion: 2
         x: 128
@@ -457,7 +457,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon9
+      name: Poison Arrow
       rect:
         serializedVersion: 2
         x: 144
@@ -478,7 +478,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon10
+      name: Common Robe
       rect:
         serializedVersion: 2
         x: 160
@@ -499,7 +499,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon11
+      name: Leather Armor
       rect:
         serializedVersion: 2
         x: 176
@@ -520,7 +520,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon12
+      name: Iron Armor
       rect:
         serializedVersion: 2
         x: 192
@@ -541,7 +541,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon13
+      name: Wooden Buckle
       rect:
         serializedVersion: 2
         x: 208
@@ -562,7 +562,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon14
+      name: Leather Boots
       rect:
         serializedVersion: 2
         x: 224
@@ -583,7 +583,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon15
+      name: Leather Cap
       rect:
         serializedVersion: 2
         x: 240
@@ -604,7 +604,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon16
+      name: Wooden Staff
       rect:
         serializedVersion: 2
         x: 256
@@ -625,7 +625,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon17
+      name: Ruby Sceptre
       rect:
         serializedVersion: 2
         x: 272
@@ -646,7 +646,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon18
+      name: Topaz Ring
       rect:
         serializedVersion: 2
         x: 288
@@ -667,7 +667,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon19
+      name: Amulet of Defence
       rect:
         serializedVersion: 2
         x: 304
@@ -688,7 +688,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon20
+      name: Lesser Health Potion
       rect:
         serializedVersion: 2
         x: 320
@@ -709,7 +709,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon21
+      name: Greater Health Potion
       rect:
         serializedVersion: 2
         x: 336
@@ -730,7 +730,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon22
+      name: Lesser Mana Potion
       rect:
         serializedVersion: 2
         x: 351
@@ -751,7 +751,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon23
+      name: Lesser Stamina Potion
       rect:
         serializedVersion: 2
         x: 368
@@ -772,7 +772,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon24
+      name: Golden Coins
       rect:
         serializedVersion: 2
         x: 384
@@ -793,7 +793,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon25
+      name: Ruby Gem
       rect:
         serializedVersion: 2
         x: 400
@@ -814,7 +814,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon26
+      name: Wooden Chest
       rect:
         serializedVersion: 2
         x: 416
@@ -835,7 +835,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon27
+      name: Key
       rect:
         serializedVersion: 2
         x: 432
@@ -856,7 +856,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon28
+      name: Steak
       rect:
         serializedVersion: 2
         x: 448
@@ -877,7 +877,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon29
+      name: Apple
       rect:
         serializedVersion: 2
         x: 464
@@ -898,7 +898,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon30
+      name: Carrot
       rect:
         serializedVersion: 2
         x: 480
@@ -919,7 +919,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon31
+      name: Cauliflower
       rect:
         serializedVersion: 2
         x: 496
@@ -940,7 +940,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon32
+      name: Cooked Fish
       rect:
         serializedVersion: 2
         x: 512
@@ -961,7 +961,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon33
+      name: Save Game
       rect:
         serializedVersion: 2
         x: 528
@@ -982,7 +982,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon34
+      name: Settings
       rect:
         serializedVersion: 2
         x: 544
@@ -1003,7 +1003,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon35
+      name: Dialog
       rect:
         serializedVersion: 2
         x: 560
@@ -1024,7 +1024,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon36
+      name: Health
       rect:
         serializedVersion: 2
         x: 576
@@ -1045,7 +1045,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon37
+      name: Water Element
       rect:
         serializedVersion: 2
         x: 592
@@ -1066,7 +1066,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon38
+      name: Earth Element
       rect:
         serializedVersion: 2
         x: 608
@@ -1087,7 +1087,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon39
+      name: Fire Element
       rect:
         serializedVersion: 2
         x: 624
@@ -1108,7 +1108,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon40
+      name: Quick Attack
       rect:
         serializedVersion: 2
         x: 640
@@ -1129,7 +1129,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon41
+      name: Strong Attack
       rect:
         serializedVersion: 2
         x: 656
@@ -1150,7 +1150,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon42
+      name: Stun
       rect:
         serializedVersion: 2
         x: 672
@@ -1171,7 +1171,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon43
+      name: Block
       rect:
         serializedVersion: 2
         x: 688
@@ -1192,7 +1192,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon44
+      name: Berserk
       rect:
         serializedVersion: 2
         x: 704
@@ -1213,7 +1213,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon45
+      name: Detect
       rect:
         serializedVersion: 2
         x: 721
@@ -1234,7 +1234,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon46
+      name: Enchancment
       rect:
         serializedVersion: 2
         x: 736
@@ -1255,7 +1255,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon47
+      name: Bleed Effect
       rect:
         serializedVersion: 2
         x: 752
@@ -1276,7 +1276,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon48
+      name: Improved Defence
       rect:
         serializedVersion: 2
         x: 768
@@ -1297,7 +1297,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon49
+      name: Yellow Mushroom
       rect:
         serializedVersion: 2
         x: 784
@@ -1318,7 +1318,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon50
+      name: Magic Eyeball
       rect:
         serializedVersion: 2
         x: 800
@@ -1339,7 +1339,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon51
+      name: Slime
       rect:
         serializedVersion: 2
         x: 816
@@ -1360,7 +1360,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon52
+      name: Bronze Frame
       rect:
         serializedVersion: 2
         x: 832
@@ -1381,10 +1381,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon53
+      name: Silver Frame
       rect:
         serializedVersion: 2
-        x: 848
+        x: 849
         y: 0
         width: 16
         height: 16
@@ -1402,7 +1402,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon54
+      name: Gold Frame
       rect:
         serializedVersion: 2
         x: 864
