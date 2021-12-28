@@ -1,8 +1,12 @@
 ﻿using System;
+using FeelFreeGames.Evaluation.Data;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using Zenject;
 
 namespace FeelFreeGames.Evaluation.Input
 {
-    public class InventoryInputHandler : IInventoryInput
+    public class InventoryInputHandler : IInventoryInput, ITickable
     {
         event Action IInventoryInput.SelectRight
         {
@@ -67,8 +71,21 @@ namespace FeelFreeGames.Evaluation.Input
         private event Action _pickUpItem;
         private event Action _dropItem;
         private event Action _cancelPickUp;
+
+        private readonly InventoryInputSettings _settings;
         
         private bool _itemPickedUp;
+
+        public InventoryInputHandler(InventoryInputSettings settings)
+        {
+            _settings = settings;
+            InputSystem.onActionChange += ProcessInputActions;
+        }
+
+        public void Release()
+        {
+            InputSystem.onActionChange -= ProcessInputActions;
+        }
         
         void IInventoryInput.OnItemPickedUp()
         {
@@ -79,5 +96,17 @@ namespace FeelFreeGames.Evaluation.Input
         {
             _itemPickedUp = false;
         }
+        
+        void ITickable.Tick()
+        {
+            //todo: handle holding navigation buttons 
+        }
+
+        private void ProcessInputActions(object action, InputActionChange change)
+        {
+            //todo:
+        }
+
+
     }
 }
