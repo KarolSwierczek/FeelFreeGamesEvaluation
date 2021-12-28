@@ -1,26 +1,34 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System;
 
 namespace FeelFreeGames.Evaluation.UI
 {
-    public class InventorySlot : MonoBehaviour, IInventorySlot
+    public class InventorySlot : IInventorySlot, IInventorySlotEvents
     {
+        event Action<IItem> IInventorySlotEvents.ItemSet
+        {
+            add => _itemSet += value;
+            remove => _itemSet -= value;
+        }
+        
         IItem IInventorySlot.CurrentItem => _currentItem;
-        
-        [SerializeField] private Image _Image;
-        
+        bool IInventorySlot.Interactable { get; set; }
+
+
         private IItem _currentItem;
+        private Action<IItem> _itemSet;
 
         void IInventorySlot.SetItem(IItem item)
         {
             _currentItem = item;
-            _Image.sprite = item.Icon;
+            _itemSet?.Invoke(item);
         }
 
         void IInventorySlot.ClearSlot()
         {
             _currentItem = null;
-            _Image.sprite = null;
+            _itemSet?.Invoke(null);
         }
+
+
     }
 }
