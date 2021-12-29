@@ -7,6 +7,7 @@ namespace FeelFreeGames.Evaluation.UI
     public class InventoryComponent : MonoBehaviour
     {
         [SerializeField] private InventorySlotComponent[] _Slots;
+        [SerializeField] private RectTransform _Selection;
         [SerializeField] private TextMeshProUGUI _ItemLabel;
         
         private IInventoryEvents _entity;

@@ -8,28 +8,10 @@ namespace FeelFreeGames.Evaluation.Input
 {
     public class InventoryInputHandler : IInventoryInput, DefaultInputActions.IInventoryActions, ITickable
     {
-        event Action IInventoryInput.SelectRight
+        event Action<Vector2Int> IInventoryInput.MoveSelection
         {
-            add => SelectRight += value;
-            remove => SelectRight -= value;
-        }
-
-        event Action IInventoryInput.SelectLeft
-        {
-            add => SelectLeft += value;
-            remove => SelectLeft -= value;
-        }
-
-        event Action IInventoryInput.SelectUp
-        {
-            add => SelectUp += value;
-            remove => SelectUp -= value;
-        }
-
-        event Action IInventoryInput.SelectDown
-        {
-            add => SelectDown += value;
-            remove => SelectDown -= value;
+            add => MoveSelection += value;
+            remove => MoveSelection -= value;
         }
 
         event Action IInventoryInput.DrawNewItems
@@ -62,10 +44,7 @@ namespace FeelFreeGames.Evaluation.Input
             remove => CancelPickUp -= value;
         }
 
-        private event Action SelectRight;
-        private event Action SelectLeft;
-        private event Action SelectUp;
-        private event Action SelectDown;
+        private event Action<Vector2Int> MoveSelection;
         private event Action DrawNewItems;
         private event Action DeleteItem;
         private event Action PickUpItem;
@@ -131,6 +110,11 @@ namespace FeelFreeGames.Evaluation.Input
 
         void DefaultInputActions.IInventoryActions.OnPickUpOrDrop(InputAction.CallbackContext context)
         {
+            if (context.phase != InputActionPhase.Started)
+            {
+                return;
+            }
+            
             if (_itemPickedUp)
             {
                 DropItem?.Invoke();
@@ -143,6 +127,11 @@ namespace FeelFreeGames.Evaluation.Input
 
         void DefaultInputActions.IInventoryActions.OnDrawItemsOrDelete(InputAction.CallbackContext context)
         {
+            if (context.phase != InputActionPhase.Started)
+            {
+                return;
+            }
+            
             if (_itemPickedUp)
             {
                 DeleteItem?.Invoke();
@@ -155,6 +144,11 @@ namespace FeelFreeGames.Evaluation.Input
 
         void DefaultInputActions.IInventoryActions.OnCancel(InputAction.CallbackContext context)
         {
+            if (context.phase != InputActionPhase.Started)
+            {
+                return;
+            }
+            
             if (_itemPickedUp)
             {
                 CancelPickUp?.Invoke();
@@ -170,7 +164,7 @@ namespace FeelFreeGames.Evaluation.Input
 
             if (_coolDown <= 0)
             {
-                TriggerNavigationEvents(_currentNavigationDirection);
+                TriggerNavigationEvent(_currentNavigationDirection);
                 _coolDown = _settings.InventoryNavigationDelay.Evaluate(_timer);
             }
 
@@ -197,25 +191,29 @@ namespace FeelFreeGames.Evaluation.Input
             _navigationHeld = false;
         }
 
-        private void TriggerNavigationEvents(Vector2 direction)
+        private void TriggerNavigationEvent(Vector2 direction)
         {
+            var discreetDirection = Vector2Int.zero;
+            
             if (direction.x > float.Epsilon)
             {
-                SelectRight?.Invoke();
+                discreetDirection.x = 1;
             }
             else if (direction.x < -float.Epsilon)
             {
-                SelectLeft?.Invoke();
+                discreetDirection.x = -1;
             }
             
             if (direction.y > float.Epsilon)
             {
-                SelectUp?.Invoke();
+                discreetDirection.y = -1;
             }
             else if (direction.y < -float.Epsilon)
             {
-                SelectDown?.Invoke();
+                discreetDirection.y = 1;
             }
+            
+            MoveSelection?.Invoke(discreetDirection);
         }
     }
 }

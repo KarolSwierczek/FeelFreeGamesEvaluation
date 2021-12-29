@@ -1,12 +1,11 @@
-﻿namespace FeelFreeGames.Evaluation.UI
+﻿using UnityEngine;
+
+namespace FeelFreeGames.Evaluation.UI
 {
 	public interface IInventory
 	{
-		void SelectRight();
-		void SelectLeft();
-		void SelectUp();
-		void SelectDown();
-		
+		void MoveSelection(Vector2Int direction);
+
 		void PickUpItem();
 		void DropItem();
 		void CancelPickUp();

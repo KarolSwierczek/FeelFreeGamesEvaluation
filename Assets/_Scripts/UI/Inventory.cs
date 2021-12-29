@@ -1,5 +1,6 @@
 ﻿using System;
 using _Scripts.Extensions;
+using FeelFreeGames.Evaluation.Utils;
 using UnityEngine;
 
 namespace FeelFreeGames.Evaluation.UI
@@ -20,6 +21,8 @@ namespace FeelFreeGames.Evaluation.UI
 
 		private event Action<IInventorySlotEvents[]> SlotsCreated;
 		private event Action<IItem> ItemSelected;
+
+		private int _selectedSlotIndex;
 
 		private readonly IInventorySlot[] _slots;
 		private readonly IItem[] _availableItems;
@@ -50,26 +53,38 @@ namespace FeelFreeGames.Evaluation.UI
 			SlotsCreated?.Invoke(slotEvents);
 			
 			DrawNewItems(_itemDrawCount);
+			SelectSlot(0);
 		}
 
-		void IInventory.SelectRight()
+		void IInventory.MoveSelection(Vector2Int direction)
 		{
-			Debug.LogError("Not implemented: SelectRight");
-		}
+			var desiredCoord = MathUtils.IndexToCoords(_selectedSlotIndex, _size.x) + direction;
+			var fits = MathUtils.ClampCoords(ref desiredCoord, _size);
 
-		void IInventory.SelectLeft()
-		{
-			Debug.LogError("Not implemented: SelectLeft");		
-		}
+			if (!fits)
+			{
+				return;
+			}
+			
+			var desiredIndex = MathUtils.CoordsToIndex(desiredCoord, _size.x);
 
-		void IInventory.SelectUp()
-		{
-			Debug.LogError("Not implemented: SelectUp");		
-		}
+			if (_slots[desiredIndex].Selectable)
+			{
+				SelectSlot(desiredIndex);
+				return;
+			}
 
-		void IInventory.SelectDown()
-		{
-			Debug.LogError("Not implemented: SelectDown");		
+			//if the slot is not selectable, attempt to move to a next free slot
+			desiredCoord += direction;
+			fits = MathUtils.ClampCoords(ref desiredCoord, _size);
+			desiredIndex = MathUtils.CoordsToIndex(desiredCoord, _size.x);
+			
+			if (!fits || !_slots[desiredIndex].Selectable)
+			{
+				return;
+			}
+			
+			SelectSlot(desiredIndex);
 		}
 
 		void IInventory.PickUpItem()
@@ -111,6 +126,14 @@ namespace FeelFreeGames.Evaluation.UI
 			{
 				randomSlots[i].SetItem(randomItems[i]);
 			}
+		}
+
+		private void SelectSlot(int index)
+		{
+			_slots[_selectedSlotIndex].SetSelection(false);
+			//todo: event for selecting a slot (used for sfx etc)
+			_selectedSlotIndex = index;
+			_slots[_selectedSlotIndex].SetSelection(true);
 		}
 	}
 }

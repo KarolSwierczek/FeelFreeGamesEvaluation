@@ -54,19 +54,16 @@ namespace FeelFreeGames.Evaluation.UI
 
         private void DespawnInventory()
         {
-            UnindInputToInventory(_inventoryInput, _inventory);
+            UnbindInputToInventory(_inventoryInput, _inventory);
             Destroy(_inventoryComponent);
             
             _inventoryComponent = null;
             _inventory = null;
         }
 
-        private void BindInputToInventory(IInventoryInput input, IInventory inventory)
+        private static void BindInputToInventory(IInventoryInput input, IInventory inventory)
         {
-            input.SelectRight += inventory.SelectRight;
-            input.SelectLeft += inventory.SelectLeft;
-            input.SelectUp += inventory.SelectUp;
-            input.SelectDown += inventory.SelectDown;
+            input.MoveSelection += inventory.MoveSelection;
             
             input.PickUpItem += inventory.PickUpItem;
             input.DropItem += inventory.DropItem;
@@ -78,12 +75,9 @@ namespace FeelFreeGames.Evaluation.UI
             input.Enable();
         }
         
-        private void UnindInputToInventory(IInventoryInput input, IInventory inventory)
+        private static void UnbindInputToInventory(IInventoryInput input, IInventory inventory)
         {
-            input.SelectRight -= inventory.SelectRight;
-            input.SelectLeft -= inventory.SelectLeft;
-            input.SelectUp -= inventory.SelectUp;
-            input.SelectDown -= inventory.SelectDown;
+            input.MoveSelection -= inventory.MoveSelection;
             
             input.PickUpItem -= inventory.PickUpItem;
             input.DropItem -= inventory.DropItem;

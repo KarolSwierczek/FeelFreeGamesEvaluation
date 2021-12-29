@@ -3,9 +3,10 @@
 	public interface IInventorySlot
 	{
 		IItem CurrentItem { get; }
-		bool Interactable { get; set; }
+		bool Selectable { get; set; }
 
 		void SetItem(IItem item);
 		void ClearSlot();
+		void SetSelection(bool selected);
 	}
 }

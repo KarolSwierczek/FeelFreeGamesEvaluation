@@ -9,13 +9,33 @@ namespace FeelFreeGames.Evaluation.UI
             add => ItemSet += value;
             remove => ItemSet -= value;
         }
-        
+
+        event Action IInventorySlotEvents.SlotSelected
+        {
+            add => SlotSelected += value;
+            remove => SlotSelected -= value;
+        }
+
+        event Action IInventorySlotEvents.SlotDeselected
+        {
+            add => SlotDeselected += value;
+            remove => SlotDeselected -= value;
+        }
+
         IItem IInventorySlot.CurrentItem => _currentItem;
-        bool IInventorySlot.Interactable { get; set; }
+        bool IInventorySlot.Selectable
+        {
+            get => _selectable;
+            set => _selectable = value;
+        }
 
 
         private IItem _currentItem;
-        private Action<IItem> ItemSet;
+        private bool _selectable = true;
+        private event Action<IItem> ItemSet;
+        private event Action SlotSelected;
+        private event Action SlotDeselected;
+
 
         void IInventorySlot.SetItem(IItem item)
         {
@@ -29,6 +49,18 @@ namespace FeelFreeGames.Evaluation.UI
             ItemSet?.Invoke(null);
         }
 
-
+        void IInventorySlot.SetSelection(bool selected)
+        {
+            if (selected)
+            {
+                SlotSelected?.Invoke();
+                _selectable = false;
+            }
+            else
+            {
+                SlotDeselected?.Invoke();
+                _selectable = true;
+            }
+        }
     }
 }

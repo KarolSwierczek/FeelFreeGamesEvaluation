@@ -1,13 +1,11 @@
 ﻿using System;
+using UnityEngine;
 
 namespace FeelFreeGames.Evaluation.Input
 {
     public interface IInventoryInput : IInput
     {
-        event Action SelectRight;
-        event Action SelectLeft;
-        event Action SelectUp;
-        event Action SelectDown;
+        event Action<Vector2Int> MoveSelection;
         
         event Action DrawNewItems;
         event Action DeleteItem;
