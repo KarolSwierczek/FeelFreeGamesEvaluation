@@ -134,6 +134,8 @@ namespace FeelFreeGames.Evaluation.UI
 			//todo: event for selecting a slot (used for sfx etc)
 			_selectedSlotIndex = index;
 			_slots[_selectedSlotIndex].SetSelection(true);
+			
+			ItemSelected?.Invoke(_slots[_selectedSlotIndex].CurrentItem);
 		}
 	}
 }
