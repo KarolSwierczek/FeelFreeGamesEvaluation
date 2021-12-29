@@ -4,9 +4,14 @@ namespace FeelFreeGames.Evaluation.UI
 {
     public interface IInventoryEvents
     {
-        event Action<IInventorySlotEvents[]> SlotsCreated;
         event Action<IItem> ItemSelected;
-        
-        //todo: item picked up, item dropped etc
+        event Action ItemPickedUp;
+        event Action ItemDeleted;
+        event Action NewItemsDrawn;
+        event Action ItemDropped;
+        event Action ItemSwapped;
+        event Action ItemPickUpCancelled;
+
+        //todo: check event types
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using FeelFreeGames.Evaluation.Data;
 using FeelFreeGames.Evaluation.Input;
 using TMPro;
@@ -9,18 +10,28 @@ using MathUtils = FeelFreeGames.Evaluation.Utils.MathUtils;
 
 namespace FeelFreeGames.Evaluation.Controllers
 {
-    public class ResolutionController : MonoBehaviour
+    public class ResolutionController : MonoBehaviour, IResolutionControllerEvents
     {
+        event Action IResolutionControllerEvents.ResolutionChanged
+        {
+            add => ResolutionChanged += value;
+            remove => ResolutionChanged -= value;
+        }
+
+        private event Action ResolutionChanged;
+        
         [SerializeField] private ResolutionSettings _Settings;
         [SerializeField] private TextMeshProUGUI _ResolutionInfo;
 
         private IGameInput _gameInput;
+        private IAudioControllerBindings _audioControllerBindings;
         private int _currentResolutionIndex;
 
         [Inject]
-        private void ResolveBindings(IGameInput gameInput)
+        private void ResolveBindings(IGameInput gameInput, IAudioControllerBindings audioControllerBindings)
         {
             _gameInput = gameInput;
+            _audioControllerBindings = audioControllerBindings;
         }
 
         private void Awake()
@@ -30,12 +41,16 @@ namespace FeelFreeGames.Evaluation.Controllers
             _gameInput.NextResolution += OnNextResolutionSelected;
             _gameInput.PreviousResolution += OnPreviousResolutionSelected;
             
+            _audioControllerBindings.BindResolutionControllerAudio(this);
+            
             _gameInput.Enable();
         }
 
         private void OnDestroy()
         {
             _gameInput.Disable();
+            
+            _audioControllerBindings.UnbindResolutionControllerAudio(this);
             
             _gameInput.NextResolution -= OnNextResolutionSelected;
             _gameInput.PreviousResolution -= OnPreviousResolutionSelected;
@@ -69,6 +84,7 @@ namespace FeelFreeGames.Evaluation.Controllers
 #else
             Screen.SetResolution(resolution.x, resolution.y, false);
 #endif
+            ResolutionChanged?.Invoke();
         }
     }
 }

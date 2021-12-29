@@ -19,14 +19,12 @@ namespace FeelFreeGames.Evaluation.UI
                 return;
             }
             
-            _inventoryEvents.SlotsCreated -= OnSlotsCreated;
             _inventoryEvents.ItemSelected -= OnItemSelected;
         }
 
         public void SetReferences(IInventoryEvents inventoryEvents, IInventorySlotEvents[] slotEvents)
         {
             _inventoryEvents = inventoryEvents;
-            _inventoryEvents.SlotsCreated += OnSlotsCreated;
             _inventoryEvents.ItemSelected += OnItemSelected;
             
             OnSlotsCreated(slotEvents);

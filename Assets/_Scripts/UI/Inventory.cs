@@ -7,21 +7,61 @@ namespace FeelFreeGames.Evaluation.UI
 {
 	public class Inventory : IInventory, IInventoryEvents
 	{
-		event Action<IInventorySlotEvents[]> IInventoryEvents.SlotsCreated
-		{
-			add => SlotsCreated += value;
-			remove => SlotsCreated -= value;
-		}
-
+		#region Events
 		event Action<IItem> IInventoryEvents.ItemSelected
 		{
 			add => ItemSelected += value;
 			remove => ItemSelected -= value;
 		}
 
-		private event Action<IInventorySlotEvents[]> SlotsCreated;
-		private event Action<IItem> ItemSelected;
+		event Action IInventoryEvents.ItemPickedUp
+		{
+			add => ItemPickedUp += value;
+			remove => ItemPickedUp -= value;
+		}
 
+		event Action IInventoryEvents.ItemDeleted
+		{
+			add => ItemDeleted += value;
+			remove => ItemDeleted -= value;
+		}
+
+		event Action IInventoryEvents.NewItemsDrawn
+		{
+			add => NewItemsDrawn += value;
+			remove => NewItemsDrawn -= value;
+		}
+
+		event Action IInventoryEvents.ItemDropped
+		{
+			add => ItemDropped += value;
+			remove => ItemDropped -= value;
+		}
+
+		event Action IInventoryEvents.ItemSwapped
+		{
+			add => ItemSwapped += value;
+			remove => ItemSwapped -= value;
+		}
+
+		event Action IInventoryEvents.ItemPickUpCancelled
+		{
+			add => ItemPickUpCancelled += value;
+			remove => ItemPickUpCancelled -= value;
+		}
+		
+		private event Action<IItem> ItemSelected;
+		private event Action ItemPickedUp;
+		private event Action ItemDeleted;
+		private event Action NewItemsDrawn;
+		private event Action ItemDropped;
+		private event Action ItemSwapped;
+		private event Action ItemPickUpCancelled;
+		#endregion Events
+
+
+		private IInventorySlot SelectedSlot => _slots[_selectedSlotIndex];
+		
 		private int _selectedSlotIndex;
 
 		private readonly IInventorySlot[] _slots;
@@ -92,27 +132,40 @@ namespace FeelFreeGames.Evaluation.UI
 
 		void IInventory.PickUpItem()
 		{
-			Debug.LogError("Not implemented: PickUpItem");		
+			Debug.LogError("Not implemented: PickUpItem");
+			ItemPickedUp?.Invoke();
 		}
 
 		void IInventory.DropItem()
 		{
-			Debug.LogError("Not implemented: DropItem");		
+			if (SelectedSlot.CurrentItem != null)
+			{
+				Debug.LogError("Not implemented: SwapItem");
+				ItemSwapped?.Invoke();
+			}
+			else
+			{
+				Debug.LogError("Not implemented: DropItem");
+				ItemDropped?.Invoke();
+			}
 		}
 
 		void IInventory.CancelPickUp()
 		{
-			Debug.LogError("Not implemented: CancelPickUp");		
+			Debug.LogError("Not implemented: CancelPickUp");
+			ItemPickUpCancelled?.Invoke();
 		}
 
 		void IInventory.DeleteItem()
 		{
-			Debug.LogError("Not implemented: DeleteItem");		
+			Debug.LogError("Not implemented: DeleteItem");
+			ItemDeleted?.Invoke();
 		}
 		
 		void IInventory.DrawNewItems()
 		{
 			DrawNewItems(_itemDrawCount);
+			NewItemsDrawn?.Invoke();
 		}
 
 		private void DrawNewItems(int itemCount)
@@ -130,16 +183,16 @@ namespace FeelFreeGames.Evaluation.UI
 				randomSlots[i].SetItem(randomItems[i]);
 			}
 			
-			ItemSelected?.Invoke(_slots[_selectedSlotIndex].CurrentItem);
+			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 		}
 
 		private void SelectSlot(int index)
 		{
-			_slots[_selectedSlotIndex].SetSelection(false);
+			SelectedSlot.SetSelection(false);
 			_selectedSlotIndex = index;
-			_slots[_selectedSlotIndex].SetSelection(true);
+			SelectedSlot.SetSelection(true);
 			
-			ItemSelected?.Invoke(_slots[_selectedSlotIndex].CurrentItem);
+			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 		}
 	}
 }
