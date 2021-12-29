@@ -8,18 +8,18 @@ namespace FeelFreeGames.Evaluation.UI
 	{
 		event Action<IInventorySlotEvents[]> IInventoryEvents.SlotsCreated
 		{
-			add => _slotsCreated += value;
-			remove => _slotsCreated -= value;
+			add => SlotsCreated += value;
+			remove => SlotsCreated -= value;
 		}
 
 		event Action<IItem> IInventoryEvents.ItemSelected
 		{
-			add => _itemSelected += value;
-			remove => _itemSelected -= value;
+			add => ItemSelected += value;
+			remove => ItemSelected -= value;
 		}
 
-		private event Action<IInventorySlotEvents[]> _slotsCreated;
-		private event Action<IItem> _itemSelected;
+		private event Action<IInventorySlotEvents[]> SlotsCreated;
+		private event Action<IItem> ItemSelected;
 
 		private readonly IInventorySlot[] _slots;
 		private readonly IItem[] _availableItems;
@@ -47,44 +47,54 @@ namespace FeelFreeGames.Evaluation.UI
 				slotEvents[i] = slot;
 			}
 			
-			_slotsCreated?.Invoke(slotEvents);
+			SlotsCreated?.Invoke(slotEvents);
 			
 			DrawNewItems(_itemDrawCount);
 		}
 
 		void IInventory.SelectRight()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: SelectRight");
 		}
 
 		void IInventory.SelectLeft()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: SelectLeft");		
 		}
 
 		void IInventory.SelectUp()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: SelectUp");		
 		}
 
 		void IInventory.SelectDown()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: SelectDown");		
 		}
 
-		void IInventory.DrawNewItems(int itemCount)
+		void IInventory.PickUpItem()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: PickUpItem");		
 		}
 
-		IItem IInventory.PickUpItem()
+		void IInventory.DropItem()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: DropItem");		
 		}
 
-		IItem IInventory.DropItem()
+		void IInventory.CancelPickUp()
 		{
-			throw new System.NotImplementedException();
+			Debug.LogError("Not implemented: CancelPickUp");		
+		}
+
+		void IInventory.DeleteItem()
+		{
+			Debug.LogError("Not implemented: DeleteItem");		
+		}
+		
+		void IInventory.DrawNewItems()
+		{
+			DrawNewItems(_itemDrawCount);
 		}
 
 		private void DrawNewItems(int itemCount)

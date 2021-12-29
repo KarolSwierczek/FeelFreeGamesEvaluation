@@ -2,7 +2,7 @@
 
 namespace FeelFreeGames.Evaluation.Input
 {
-    public interface IGameInput
+    public interface IGameInput : IInput
     {
         event Action NextResolution;
         event Action PreviousResolution;

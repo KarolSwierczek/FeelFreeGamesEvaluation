@@ -6,8 +6,8 @@ namespace FeelFreeGames.Evaluation.UI
     {
         event Action<IItem> IInventorySlotEvents.ItemSet
         {
-            add => _itemSet += value;
-            remove => _itemSet -= value;
+            add => ItemSet += value;
+            remove => ItemSet -= value;
         }
         
         IItem IInventorySlot.CurrentItem => _currentItem;
@@ -15,18 +15,18 @@ namespace FeelFreeGames.Evaluation.UI
 
 
         private IItem _currentItem;
-        private Action<IItem> _itemSet;
+        private Action<IItem> ItemSet;
 
         void IInventorySlot.SetItem(IItem item)
         {
             _currentItem = item;
-            _itemSet?.Invoke(item);
+            ItemSet?.Invoke(item);
         }
 
         void IInventorySlot.ClearSlot()
         {
             _currentItem = null;
-            _itemSet?.Invoke(null);
+            ItemSet?.Invoke(null);
         }
 
 

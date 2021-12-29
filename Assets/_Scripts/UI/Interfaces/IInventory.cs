@@ -6,11 +6,12 @@
 		void SelectLeft();
 		void SelectUp();
 		void SelectDown();
-
-		void DrawNewItems(int itemCount);
-		IItem PickUpItem();
-		IItem DropItem();
 		
-		//todo: complete and make Inventory implement this
+		void PickUpItem();
+		void DropItem();
+		void CancelPickUp();
+		void DeleteItem();
+		
+		void DrawNewItems();
 	}
 }

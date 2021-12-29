@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20dd22f84eb4cf693c819038a5fcf9a, type: 3}
+  m_Name: ResolutionSettings
+  m_EditorClassIdentifier: 
+  _Resolutions:
+  - Value: {x: 1280, y: 720}
+    EditorIndex: 9
+  - Value: {x: 1920, y: 1080}
+    EditorIndex: 8
+  - Value: {x: 3860, y: 2160}
+    EditorIndex: 10

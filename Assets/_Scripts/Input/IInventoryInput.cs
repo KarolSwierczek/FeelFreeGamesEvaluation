@@ -2,7 +2,7 @@
 
 namespace FeelFreeGames.Evaluation.Input
 {
-    public interface IInventoryInput
+    public interface IInventoryInput : IInput
     {
         event Action SelectRight;
         event Action SelectLeft;
@@ -15,7 +15,7 @@ namespace FeelFreeGames.Evaluation.Input
         event Action PickUpItem;
         event Action DropItem;
         event Action CancelPickUp;
-
+        
         void OnItemPickedUp();
         void OnItemDropped();
     }

@@ -6,85 +6,96 @@ using Zenject;
 
 namespace FeelFreeGames.Evaluation.Input
 {
-    public class InventoryInputHandler : IInventoryInput, ITickable
+    public class InventoryInputHandler : IInventoryInput, DefaultInputActions.IInventoryActions, ITickable
     {
         event Action IInventoryInput.SelectRight
         {
-            add => _selectRight += value;
-            remove => _selectRight -= value;
+            add => SelectRight += value;
+            remove => SelectRight -= value;
         }
 
         event Action IInventoryInput.SelectLeft
         {
-            add => _selectLeft += value;
-            remove => _selectLeft -= value;
+            add => SelectLeft += value;
+            remove => SelectLeft -= value;
         }
 
         event Action IInventoryInput.SelectUp
         {
-            add => _selectUp += value;
-            remove => _selectUp -= value;
+            add => SelectUp += value;
+            remove => SelectUp -= value;
         }
 
         event Action IInventoryInput.SelectDown
         {
-            add => _selectDown += value;
-            remove => _selectDown -= value;
+            add => SelectDown += value;
+            remove => SelectDown -= value;
         }
 
         event Action IInventoryInput.DrawNewItems
         {
-            add => _drawNewItems += value;
-            remove => _drawNewItems -= value;
+            add => DrawNewItems += value;
+            remove => DrawNewItems -= value;
         }
 
         event Action IInventoryInput.DeleteItem
         {
-            add => _deleteItem += value;
-            remove => _deleteItem -= value;
+            add => DeleteItem += value;
+            remove => DeleteItem -= value;
         }
 
         event Action IInventoryInput.PickUpItem
         {
-            add => _pickUpItem += value;
-            remove => _pickUpItem -= value;
+            add => PickUpItem += value;
+            remove => PickUpItem -= value;
         }
 
         event Action IInventoryInput.DropItem
         {
-            add => _dropItem += value;
-            remove => _dropItem -= value;
+            add => DropItem += value;
+            remove => DropItem -= value;
         }
 
         event Action IInventoryInput.CancelPickUp
         {
-            add => _cancelPickUp += value;
-            remove => _cancelPickUp -= value;
+            add => CancelPickUp += value;
+            remove => CancelPickUp -= value;
         }
 
-        private event Action _selectRight;
-        private event Action _selectLeft;
-        private event Action _selectUp;
-        private event Action _selectDown;
-        private event Action _drawNewItems;
-        private event Action _deleteItem;
-        private event Action _pickUpItem;
-        private event Action _dropItem;
-        private event Action _cancelPickUp;
+        private event Action SelectRight;
+        private event Action SelectLeft;
+        private event Action SelectUp;
+        private event Action SelectDown;
+        private event Action DrawNewItems;
+        private event Action DeleteItem;
+        private event Action PickUpItem;
+        private event Action DropItem;
+        private event Action CancelPickUp;
 
         private readonly InventoryInputSettings _settings;
+        private readonly DefaultInputActions _inputActions;
         
         private bool _itemPickedUp;
+        private bool _navigationHeld;
+        private float _timer;
+        private float _coolDown;
+        private Vector2 _currentNavigationDirection;
 
-        public InventoryInputHandler(InventoryInputSettings settings)
+        public InventoryInputHandler(InventoryInputSettings settings, DefaultInputActions inputActions)
         {
             _settings = settings;
-            InputSystem.onActionChange += ProcessInputActions;
+            _inputActions = inputActions;
         }
 
-        public void Release()
+        void IInput.Enable()
         {
-            InputSystem.onActionChange -= ProcessInputActions;
+            _inputActions.Inventory.SetCallbacks(this);
+            _inputActions.Inventory.Enable();
+        }
+
+        void IInput.Disable()
+        {
+            _inputActions.Inventory.Disable();
         }
         
         void IInventoryInput.OnItemPickedUp()
@@ -96,17 +107,115 @@ namespace FeelFreeGames.Evaluation.Input
         {
             _itemPickedUp = false;
         }
-        
+
+        void DefaultInputActions.IInventoryActions.OnNavigate(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnNavigationActionStarted(context.ReadValue<Vector2>());
+                    break;
+                case InputActionPhase.Performed:
+                    OnNavigationActionPerformed(context.ReadValue<Vector2>());
+                    break;
+                case InputActionPhase.Canceled:
+                    OnNavigationActionCancelled();
+                    break;
+                case InputActionPhase.Disabled:
+                case InputActionPhase.Waiting:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        void DefaultInputActions.IInventoryActions.OnPickUpOrDrop(InputAction.CallbackContext context)
+        {
+            if (_itemPickedUp)
+            {
+                DropItem?.Invoke();
+            }
+            else
+            {
+                PickUpItem?.Invoke();
+            }
+        }
+
+        void DefaultInputActions.IInventoryActions.OnDrawItemsOrDelete(InputAction.CallbackContext context)
+        {
+            if (_itemPickedUp)
+            {
+                DeleteItem?.Invoke();
+            }
+            else
+            {
+                DrawNewItems?.Invoke();
+            }
+        }
+
+        void DefaultInputActions.IInventoryActions.OnCancel(InputAction.CallbackContext context)
+        {
+            if (_itemPickedUp)
+            {
+                CancelPickUp?.Invoke();
+            }
+        }
+
         void ITickable.Tick()
         {
-            //todo: handle holding navigation buttons 
+            if (!_navigationHeld)
+            {
+                return;
+            }
+
+            if (_coolDown <= 0)
+            {
+                TriggerNavigationEvents(_currentNavigationDirection);
+                _coolDown = _settings.InventoryNavigationDelay.Evaluate(_timer);
+            }
+
+            _timer += Time.deltaTime;
+            _coolDown -= Time.deltaTime;
         }
 
-        private void ProcessInputActions(object action, InputActionChange change)
+        private void OnNavigationActionStarted(Vector2 direction)
         {
-            //todo:
+            _currentNavigationDirection = direction;
+            _navigationHeld = true;
+            _timer = 0f;
+            _coolDown = 0f;
         }
 
+        private void OnNavigationActionPerformed(Vector2 direction)
+        {
+            _currentNavigationDirection = direction;
+        }
 
+        private void OnNavigationActionCancelled()
+        {
+            _currentNavigationDirection = Vector2.zero;
+            _navigationHeld = false;
+        }
+
+        private void TriggerNavigationEvents(Vector2 direction)
+        {
+            if (direction.x > float.Epsilon)
+            {
+                SelectRight?.Invoke();
+            }
+            else if (direction.x < -float.Epsilon)
+            {
+                SelectLeft?.Invoke();
+            }
+            
+            if (direction.y > float.Epsilon)
+            {
+                SelectUp?.Invoke();
+            }
+            else if (direction.y < -float.Epsilon)
+            {
+                SelectDown?.Invoke();
+            }
+        }
     }
 }

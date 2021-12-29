@@ -6,5 +6,7 @@ namespace FeelFreeGames.Evaluation.UI
     {
         event Action<IInventorySlotEvents[]> SlotsCreated;
         event Action<IItem> ItemSelected;
+        
+        //todo: item picked up, item dropped etc
     }
 }
