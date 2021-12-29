@@ -10,24 +10,26 @@ namespace FeelFreeGames.Evaluation.UI
         [SerializeField] private RectTransform _Selection;
         [SerializeField] private TextMeshProUGUI _ItemLabel;
         
-        private IInventoryEvents _entity;
+        private IInventoryEvents _inventoryEvents;
         
         private void OnDestroy()
         {
-            if (_entity == null)
+            if (_inventoryEvents == null)
             {
                 return;
             }
             
-            _entity.SlotsCreated -= OnSlotsCreated;
-            _entity.ItemSelected -= OnItemSelected;
+            _inventoryEvents.SlotsCreated -= OnSlotsCreated;
+            _inventoryEvents.ItemSelected -= OnItemSelected;
         }
 
-        public void SetEntity(IInventoryEvents entity)
+        public void SetReferences(IInventoryEvents inventoryEvents, IInventorySlotEvents[] slotEvents)
         {
-            _entity = entity;
-            _entity.SlotsCreated += OnSlotsCreated;
-            _entity.ItemSelected += OnItemSelected;
+            _inventoryEvents = inventoryEvents;
+            _inventoryEvents.SlotsCreated += OnSlotsCreated;
+            _inventoryEvents.ItemSelected += OnItemSelected;
+            
+            OnSlotsCreated(slotEvents);
         }
 
         private void OnSlotsCreated(IInventorySlotEvents[] slots)
@@ -45,7 +47,7 @@ namespace FeelFreeGames.Evaluation.UI
             
             for (var i = 0; i < slots.Length; i++)
             {
-                _Slots[i].SetEntity(slots[i]);
+                _Slots[i].SetReferences(slots[i]);
             }
         }
 

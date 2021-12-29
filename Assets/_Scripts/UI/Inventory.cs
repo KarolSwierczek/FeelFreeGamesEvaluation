@@ -39,10 +39,10 @@ namespace FeelFreeGames.Evaluation.UI
 			_itemDrawCount = itemDrawCount;
 		}
 
-		public void CreateSlots()
+		public IInventorySlotEvents[] CreateSlots()
 		{
 			var slotEvents = new IInventorySlotEvents[_slotCount];
-			
+
 			for (var i = 0; i < _slotCount; i++)
 			{
 				var slot = new InventorySlot();
@@ -50,8 +50,11 @@ namespace FeelFreeGames.Evaluation.UI
 				slotEvents[i] = slot;
 			}
 			
-			SlotsCreated?.Invoke(slotEvents);
-			
+			return slotEvents;
+		}
+		
+		public void Initialize()
+		{
 			DrawNewItems(_itemDrawCount);
 			SelectSlot(0);
 		}
@@ -126,12 +129,13 @@ namespace FeelFreeGames.Evaluation.UI
 			{
 				randomSlots[i].SetItem(randomItems[i]);
 			}
+			
+			ItemSelected?.Invoke(_slots[_selectedSlotIndex].CurrentItem);
 		}
 
 		private void SelectSlot(int index)
 		{
 			_slots[_selectedSlotIndex].SetSelection(false);
-			//todo: event for selecting a slot (used for sfx etc)
 			_selectedSlotIndex = index;
 			_slots[_selectedSlotIndex].SetSelection(true);
 			

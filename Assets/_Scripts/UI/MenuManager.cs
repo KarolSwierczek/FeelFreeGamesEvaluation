@@ -20,7 +20,6 @@ namespace FeelFreeGames.Evaluation.UI
         private InventoryComponent _inventoryComponent;
 
         private IInventoryInput _inventoryInput;
-        private IGameInput _gameInput;
 
         private void OnEnable()
         {
@@ -33,22 +32,22 @@ namespace FeelFreeGames.Evaluation.UI
         }
 
         [Inject]
-        private void ResolveBindings(IInventoryInput inventoryInput, IGameInput gameInput)
+        private void ResolveBindings(IInventoryInput inventoryInput)
         {
             _inventoryInput = inventoryInput;
-            _gameInput = gameInput;
         }
 
         private void SpawnInventory(InventorySettings settings)
         {
-            _inventoryComponent = Instantiate(settings.MenuPrefab, _MenuCanvas);
-
             var availableItems = GetItemsFromIcons(settings.ItemIcons);
+            
             _inventory = new Inventory(settings.Dimensions, availableItems, settings.ItemDrawCount);
+            var slots = _inventory.CreateSlots();
             
-            _inventoryComponent.SetEntity(_inventory);
-            _inventory.CreateSlots();
-            
+            _inventoryComponent = Instantiate(settings.MenuPrefab, _MenuCanvas);
+            _inventoryComponent.SetReferences(_inventory, slots);
+
+            _inventory.Initialize();
             BindInputToInventory(_inventoryInput, _inventory);
         }
 

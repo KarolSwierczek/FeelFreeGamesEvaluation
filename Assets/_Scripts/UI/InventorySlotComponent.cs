@@ -8,26 +8,26 @@ namespace FeelFreeGames.Evaluation.UI
         [SerializeField] private Image _Icon;
         [SerializeField] private Image _Selection;
 
-        private IInventorySlotEvents _entity;
+        private IInventorySlotEvents _slotEvents;
         
         private void OnDestroy()
         {
-            if (_entity == null)
+            if (_slotEvents == null)
             {
                 return;
             }
             
-            _entity.ItemSet -= OnItemSet;
-            _entity.SlotSelected -= OnSlotSelected;
-            _entity.SlotDeselected -= OnSlotDeselected;
+            _slotEvents.ItemSet -= OnItemSet;
+            _slotEvents.SlotSelected -= OnSlotSelected;
+            _slotEvents.SlotDeselected -= OnSlotDeselected;
         }
 
-        public void SetEntity(IInventorySlotEvents entity)
+        public void SetReferences(IInventorySlotEvents slotEvents)
         {
-            _entity = entity;
-            _entity.ItemSet += OnItemSet;
-            _entity.SlotSelected += OnSlotSelected;
-            _entity.SlotDeselected += OnSlotDeselected;
+            _slotEvents = slotEvents;
+            _slotEvents.ItemSet += OnItemSet;
+            _slotEvents.SlotSelected += OnSlotSelected;
+            _slotEvents.SlotDeselected += OnSlotDeselected;
         }
 
         private void OnItemSet(IItem item)
