@@ -11,7 +11,6 @@ namespace FeelFreeGames.Evaluation.UI
         event Action ItemDropped;
         event Action ItemSwapped;
         event Action ItemPickUpCancelled;
-
-        //todo: check event types
+        event Action SelectionMoved;
     }
 }

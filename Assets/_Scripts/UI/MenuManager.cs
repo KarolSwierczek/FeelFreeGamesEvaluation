@@ -74,10 +74,13 @@ namespace FeelFreeGames.Evaluation.UI
             input.DeleteItem += inventory.DeleteItem;
             input.DrawNewItems += inventory.DrawNewItems;
 
-            //events going back from inventory allow to offload some of the input logic to the input handler.
-            //this is useful if we change the control scheme in the future
+            //events going back from inventory allow to offload all of the input logic to the input handler.
+            //this is useful if we change the control scheme in the future (different key for pickup and drop, etc.)
             inventoryEvents.ItemPickedUp += input.OnItemPickedUp;
             inventoryEvents.ItemDropped += input.OnItemDropped;
+            inventoryEvents.ItemSwapped += input.OnItemDropped;
+            inventoryEvents.ItemPickUpCancelled += input.OnItemDropped;
+            inventoryEvents.ItemDeleted += input.OnItemDropped;
 
             input.Enable();
         }
@@ -93,6 +96,9 @@ namespace FeelFreeGames.Evaluation.UI
             
             inventoryEvents.ItemPickedUp -= input.OnItemPickedUp;
             inventoryEvents.ItemDropped -= input.OnItemDropped;
+            inventoryEvents.ItemSwapped -= input.OnItemDropped;
+            inventoryEvents.ItemPickUpCancelled -= input.OnItemDropped;
+            inventoryEvents.ItemDeleted -= input.OnItemDropped;
             
             input.Disable();
         }

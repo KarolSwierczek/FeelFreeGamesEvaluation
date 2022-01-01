@@ -16,7 +16,7 @@ namespace FeelFreeGames.Evaluation.Controllers
 
         void IAudioControllerBindings.BindInventoryAudio(IInventoryEvents inventoryEvents)
         {
-            inventoryEvents.ItemSelected += OnItemSelected;
+            inventoryEvents.SelectionMoved += OnSelectionMoved;
             inventoryEvents.ItemDeleted += OnItemDeleted;
             inventoryEvents.NewItemsDrawn += OnNewItemsDrawn;
             inventoryEvents.ItemDropped += OnItemDropped;
@@ -32,7 +32,7 @@ namespace FeelFreeGames.Evaluation.Controllers
 
         void IAudioControllerBindings.UnbindInventoryAudio(IInventoryEvents inventoryEvents)
         {
-            inventoryEvents.ItemSelected -= OnItemSelected;
+            inventoryEvents.SelectionMoved -= OnSelectionMoved;
             inventoryEvents.ItemDeleted -= OnItemDeleted;
             inventoryEvents.NewItemsDrawn -= OnNewItemsDrawn;
             inventoryEvents.ItemDropped -= OnItemDropped;
@@ -46,7 +46,7 @@ namespace FeelFreeGames.Evaluation.Controllers
             resolutionControllerEvents.ResolutionChanged -= OnResolutionChanged;
         }
 
-        private void OnItemSelected(IItem item)
+        private void OnSelectionMoved()
         {
             _audioController.PlayClipOfType(AudioClipType.Rollover);
         }

@@ -50,6 +50,12 @@ namespace FeelFreeGames.Evaluation.UI
 			remove => ItemPickUpCancelled -= value;
 		}
 		
+		event Action IInventoryEvents.SelectionMoved
+		{
+			add => SelectionMoved += value;
+			remove => SelectionMoved -= value;
+		}
+		
 		private event Action<IItem> ItemSelected;
 		private event Action ItemPickedUp;
 		private event Action ItemDeleted;
@@ -57,12 +63,16 @@ namespace FeelFreeGames.Evaluation.UI
 		private event Action ItemDropped;
 		private event Action ItemSwapped;
 		private event Action ItemPickUpCancelled;
+		private event Action SelectionMoved;
 		#endregion Events
 
 
 		private IInventorySlot SelectedSlot => _slots[_selectedSlotIndex];
 		
 		private int _selectedSlotIndex;
+		
+		private IItem _pickedUpItem;
+		private IInventorySlot _originSlot;
 
 		private readonly IInventorySlot[] _slots;
 		private readonly IItem[] _availableItems;
@@ -102,63 +112,85 @@ namespace FeelFreeGames.Evaluation.UI
 		void IInventory.MoveSelection(Vector2Int direction)
 		{
 			var desiredCoord = MathUtils.IndexToCoords(_selectedSlotIndex, _size.x) + direction;
-			var fits = MathUtils.ClampCoords(ref desiredCoord, _size);
+			var clampedCoord = MathUtils.ClampCoords(desiredCoord, _size);
+			var desiredIndex = MathUtils.CoordsToIndex(clampedCoord, _size.x);
+			var fits = desiredIndex != _selectedSlotIndex;
 
 			if (!fits)
 			{
 				return;
 			}
-			
-			var desiredIndex = MathUtils.CoordsToIndex(desiredCoord, _size.x);
 
-			if (_slots[desiredIndex].Selectable)
-			{
-				SelectSlot(desiredIndex);
-				return;
-			}
-
-			//if the slot is not selectable, attempt to move to a next free slot
-			desiredCoord += direction;
-			fits = MathUtils.ClampCoords(ref desiredCoord, _size);
-			desiredIndex = MathUtils.CoordsToIndex(desiredCoord, _size.x);
-			
-			if (!fits || !_slots[desiredIndex].Selectable)
-			{
-				return;
-			}
-			
 			SelectSlot(desiredIndex);
+			SelectionMoved?.Invoke();
 		}
 
 		void IInventory.PickUpItem()
 		{
-			Debug.LogError("Not implemented: PickUpItem");
+			if (SelectedSlot.CurrentItem == null)
+			{
+				Debug.Log("Trying to pick up an item, but the selected slot is empty!");
+				return;
+			}
+			
+			_originSlot = SelectedSlot;
+			_pickedUpItem = _originSlot.CurrentItem;
+
+			_originSlot.ClearSlot(true);
+
+			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 			ItemPickedUp?.Invoke();
 		}
 
 		void IInventory.DropItem()
 		{
+			if (_pickedUpItem == null)
+			{
+				Debug.LogError("Trying to drop an item, but no item has been picked up!");
+				return;
+			}
+			
 			if (SelectedSlot.CurrentItem != null)
 			{
-				Debug.LogError("Not implemented: SwapItem");
+				var originalItem = SelectedSlot.CurrentItem;
+				
+				SelectedSlot.SetItem(_pickedUpItem, true);
+				_originSlot.SetItem(originalItem);
+				
+				ResetOriginSlot();
 				ItemSwapped?.Invoke();
 			}
 			else
 			{
-				Debug.LogError("Not implemented: DropItem");
+				SelectedSlot.SetItem(_pickedUpItem, true);
+				
+				ResetOriginSlot();
 				ItemDropped?.Invoke();
 			}
+			
+			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 		}
 
 		void IInventory.CancelPickUp()
 		{
-			Debug.LogError("Not implemented: CancelPickUp");
+			if (_pickedUpItem == null)
+			{
+				Debug.LogError("Trying to cancel picking up an item, but no item has been picked up!");
+				return;
+			}
+			
+			_originSlot.SetItem(_pickedUpItem);
+			ResetOriginSlot();
+			
 			ItemPickUpCancelled?.Invoke();
 		}
 
 		void IInventory.DeleteItem()
 		{
-			Debug.LogError("Not implemented: DeleteItem");
+			//todo: get delete event to item animator
+			
+			ResetOriginSlot();
+			
 			ItemDeleted?.Invoke();
 		}
 		
@@ -193,6 +225,12 @@ namespace FeelFreeGames.Evaluation.UI
 			SelectedSlot.SetSelection(true);
 			
 			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
+		}
+
+		private void ResetOriginSlot()
+		{
+			_originSlot = null;
+			_pickedUpItem = null;
 		}
 	}
 }

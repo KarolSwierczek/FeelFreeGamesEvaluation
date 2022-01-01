@@ -18,42 +18,30 @@ namespace FeelFreeGames.Evaluation.Utils
         {
             return coords.x + coords.y * width;
         }
-
-        /// <summary>
-        /// Clamps coordinates to fit inside given matrix dimensions
-        /// </summary>
-        /// <returns>
-        /// true if at least one component of the coordinates already fit inside the dimensions,
-        /// false otherwise
-        /// </returns>
-        public static bool ClampCoords(ref Vector2Int coords, Vector2Int dimensions)
+        
+        public static Vector2Int ClampCoords(Vector2Int coords, Vector2Int dimensions)
         {
-            var fitsHorizontally = true;
-            var fitsVertically = true;
+            var clampedCoords = coords;
             
             if (coords.x >= dimensions.x)
             {
-                fitsHorizontally = false;
-                coords.x = dimensions.x - 1;
+                clampedCoords.x = dimensions.x - 1;
             }
             else if (coords.x < 0)
             {
-                fitsHorizontally = false;
-                coords.x = 0;
+                clampedCoords.x = 0;
             }
             
             if (coords.y >= dimensions.y)
             {
-                fitsVertically = false;
-                coords.y = dimensions.y - 1;
+                clampedCoords.y = dimensions.y - 1;
             }
             else if (coords.y < 0)
             {
-                fitsVertically = false;
-                coords.y = 0;
+                clampedCoords.y = 0;
             }
-
-            return fitsHorizontally || fitsVertically;
+            
+            return clampedCoords;
         }
     }
 }
