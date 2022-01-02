@@ -4,6 +4,7 @@ using FeelFreeGames.Evaluation.Controllers;
 using FeelFreeGames.Evaluation.Data;
 using FeelFreeGames.Evaluation.Input;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace FeelFreeGames.Evaluation.UI
@@ -22,6 +23,8 @@ namespace FeelFreeGames.Evaluation.UI
 
         private IInventoryInput _inventoryInput;
         private IAudioControllerBindings _audioControllerBindings;
+        private IItemHandler _itemHandler;
+        private IItemHandlerEvents _itemHandlerEvents;
 
         private void OnEnable()
         {
@@ -34,10 +37,13 @@ namespace FeelFreeGames.Evaluation.UI
         }
 
         [Inject]
-        private void ResolveBindings(IInventoryInput inventoryInput, IAudioControllerBindings audioControllerBindings)
+        private void ResolveBindings(IInventoryInput inventoryInput, IAudioControllerBindings audioControllerBindings, 
+            IItemHandler itemHandler, IItemHandlerEvents itemHandlerEvents)
         {
             _inventoryInput = inventoryInput;
             _audioControllerBindings = audioControllerBindings;
+            _itemHandler = itemHandler;
+            _itemHandlerEvents = itemHandlerEvents;
         }
 
         private void SpawnInventory(InventorySettings settings)
@@ -48,8 +54,13 @@ namespace FeelFreeGames.Evaluation.UI
             var slots = _inventory.CreateSlots();
             
             _inventoryComponent = Instantiate(settings.MenuPrefab, _MenuCanvas);
-            _inventoryComponent.SetReferences(_inventory, slots);
+            _inventoryComponent.SetReferences(_inventory, slots, _itemHandler);
 
+            var itemHandlerComponent = _inventoryComponent.GetComponentInChildren<ItemHandlerComponent>();
+            itemHandlerComponent.SetReferences(_itemHandlerEvents);
+            
+            Canvas.ForceUpdateCanvases(); //force layout update so that the selection marker can be placed in the right position
+            
             _inventory.Initialize();
             BindInputToInventory(_inventoryInput, _inventory, _inventory);
             _audioControllerBindings.BindInventoryAudio(_inventory);

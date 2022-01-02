@@ -3,9 +3,13 @@
 	public interface IInventorySlot
 	{
 		IItem CurrentItem { get; }
-
-		void SetItem(IItem item, bool triggerDroppedEvent = false);
-		void ClearSlot(bool triggerPickedUpEvent = false);
-		void SetSelection(bool selected);
+		
+		void SetItem(IItem item);
+		void ClearSlot();
+		void DropInItem(IItem item);
+		void PickUpItem();
+		void CancelPickUpItem(IItem item);
+		void DeleteItem();
+		void Select();
 	}
 }

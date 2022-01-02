@@ -7,7 +7,6 @@ namespace FeelFreeGames.Evaluation.UI
     public class InventoryComponent : MonoBehaviour
     {
         [SerializeField] private InventorySlotComponent[] _Slots;
-        [SerializeField] private RectTransform _Selection;
         [SerializeField] private TextMeshProUGUI _ItemLabel;
         
         private IInventoryEvents _inventoryEvents;
@@ -22,15 +21,15 @@ namespace FeelFreeGames.Evaluation.UI
             _inventoryEvents.ItemSelected -= OnItemSelected;
         }
 
-        public void SetReferences(IInventoryEvents inventoryEvents, IInventorySlotEvents[] slotEvents)
+        public void SetReferences(IInventoryEvents inventoryEvents, IInventorySlotEvents[] slotEvents, IItemHandler itemHandler)
         {
             _inventoryEvents = inventoryEvents;
             _inventoryEvents.ItemSelected += OnItemSelected;
             
-            OnSlotsCreated(slotEvents);
+            OnSlotsCreated(slotEvents, itemHandler);
         }
 
-        private void OnSlotsCreated(IInventorySlotEvents[] slots)
+        private void OnSlotsCreated(IInventorySlotEvents[] slots, IItemHandler itemHandler)
         {
             if (slots == null)
             {
@@ -45,7 +44,7 @@ namespace FeelFreeGames.Evaluation.UI
             
             for (var i = 0; i < slots.Length; i++)
             {
-                _Slots[i].SetReferences(slots[i]);
+                _Slots[i].SetReferences(slots[i], itemHandler);
             }
         }
 

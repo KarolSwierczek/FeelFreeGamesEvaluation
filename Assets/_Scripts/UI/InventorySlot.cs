@@ -10,16 +10,28 @@ namespace FeelFreeGames.Evaluation.UI
             remove => ItemPickedUp -= value;
         }
 
-        event Action IInventorySlotEvents.ItemDropped
+        event Action<IItem> IInventorySlotEvents.ItemDropped
         {
             add => ItemDropped += value;
             remove => ItemDropped -= value;
-            
         }
+
+        event Action<IItem> IInventorySlotEvents.ItemPickUpCancelled
+        {
+            add => ItemPickUpCancelled += value;
+            remove => ItemPickUpCancelled -= value;
+        }
+
         event Action<IItem> IInventorySlotEvents.ItemSet
         {
             add => ItemSet += value;
             remove => ItemSet -= value;
+        }
+
+        event Action IInventorySlotEvents.ItemDeleted
+        {
+            add => ItemDeleted += value;
+            remove => ItemDeleted -= value;
         }
 
         event Action IInventorySlotEvents.SlotSelected
@@ -28,58 +40,57 @@ namespace FeelFreeGames.Evaluation.UI
             remove => SlotSelected -= value;
         }
 
-        event Action IInventorySlotEvents.SlotDeselected
-        {
-            add => SlotDeselected += value;
-            remove => SlotDeselected -= value;
-        }
-
         IItem IInventorySlot.CurrentItem => _currentItem;
 
         
         private event Action<IItem> ItemPickedUp;
-        private event Action ItemDropped;
+        private event Action<IItem> ItemDropped;
+        private event Action<IItem> ItemPickUpCancelled;
         private event Action<IItem> ItemSet;
+        private event Action ItemDeleted;
         private event Action SlotSelected;
-        private event Action SlotDeselected;
-        
-        private IItem _currentItem;
-        
 
-        void IInventorySlot.SetItem(IItem item, bool triggerDroppedEvent)
+        private IItem _currentItem;
+
+
+        void IInventorySlot.DropInItem(IItem item)
+        {
+            _currentItem = item;
+            ItemDropped?.Invoke(item);
+        }
+
+        void IInventorySlot.PickUpItem()
+        {
+            ItemPickedUp?.Invoke(_currentItem);
+            _currentItem = null;
+        }
+
+        void IInventorySlot.DeleteItem()
+        {
+            ItemDeleted?.Invoke();
+        }
+
+        void IInventorySlot.SetItem(IItem item)
         {
             _currentItem = item;
             ItemSet?.Invoke(item);
-
-            if (triggerDroppedEvent)
-            {
-                ItemDropped?.Invoke();
-            }
+        }
+        
+        void IInventorySlot.CancelPickUpItem(IItem item)
+        {
+            _currentItem = item;
+            ItemPickUpCancelled?.Invoke(item);
         }
 
-        void IInventorySlot.ClearSlot(bool triggerPickedUpEvent)
+        void IInventorySlot.ClearSlot()
         {
-            var item = _currentItem;
-            
             _currentItem = null;
             ItemSet?.Invoke(null);
-
-            if (triggerPickedUpEvent)
-            {
-                ItemPickedUp?.Invoke(item);
-            }
         }
 
-        void IInventorySlot.SetSelection(bool selected)
+        void IInventorySlot.Select()
         {
-            if (selected)
-            {
-                SlotSelected?.Invoke();
-            }
-            else
-            {
-                SlotDeselected?.Invoke();
-            }
+            SlotSelected?.Invoke();
         }
     }
 }

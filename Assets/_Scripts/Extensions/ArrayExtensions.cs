@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _Scripts.Extensions
+namespace FeelFreeGames.Evaluation.Extensions
 {
 	public static class ArrayExtensions
 	{

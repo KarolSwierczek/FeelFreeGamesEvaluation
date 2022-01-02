@@ -1,5 +1,5 @@
 ﻿using System;
-using _Scripts.Extensions;
+using FeelFreeGames.Evaluation.Extensions;
 using FeelFreeGames.Evaluation.Utils;
 using UnityEngine;
 
@@ -136,7 +136,7 @@ namespace FeelFreeGames.Evaluation.UI
 			_originSlot = SelectedSlot;
 			_pickedUpItem = _originSlot.CurrentItem;
 
-			_originSlot.ClearSlot(true);
+			_originSlot.PickUpItem();
 
 			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 			ItemPickedUp?.Invoke();
@@ -154,7 +154,7 @@ namespace FeelFreeGames.Evaluation.UI
 			{
 				var originalItem = SelectedSlot.CurrentItem;
 				
-				SelectedSlot.SetItem(_pickedUpItem, true);
+				SelectedSlot.DropInItem(_pickedUpItem);
 				_originSlot.SetItem(originalItem);
 				
 				ResetOriginSlot();
@@ -162,7 +162,7 @@ namespace FeelFreeGames.Evaluation.UI
 			}
 			else
 			{
-				SelectedSlot.SetItem(_pickedUpItem, true);
+				SelectedSlot.DropInItem(_pickedUpItem);
 				
 				ResetOriginSlot();
 				ItemDropped?.Invoke();
@@ -179,7 +179,7 @@ namespace FeelFreeGames.Evaluation.UI
 				return;
 			}
 			
-			_originSlot.SetItem(_pickedUpItem);
+			_originSlot.CancelPickUpItem(_pickedUpItem);
 			ResetOriginSlot();
 			
 			ItemPickUpCancelled?.Invoke();
@@ -187,8 +187,7 @@ namespace FeelFreeGames.Evaluation.UI
 
 		void IInventory.DeleteItem()
 		{
-			//todo: get delete event to item animator
-			
+			_originSlot.DeleteItem();
 			ResetOriginSlot();
 			
 			ItemDeleted?.Invoke();
@@ -220,9 +219,8 @@ namespace FeelFreeGames.Evaluation.UI
 
 		private void SelectSlot(int index)
 		{
-			SelectedSlot.SetSelection(false);
 			_selectedSlotIndex = index;
-			SelectedSlot.SetSelection(true);
+			SelectedSlot.Select();
 			
 			ItemSelected?.Invoke(SelectedSlot.CurrentItem);
 		}
