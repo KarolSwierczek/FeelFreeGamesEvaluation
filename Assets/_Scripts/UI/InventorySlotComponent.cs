@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace FeelFreeGames.Evaluation.UI
 {
@@ -60,7 +59,7 @@ namespace FeelFreeGames.Evaluation.UI
         private void OnItemPickedUp(IItem item)
         {
             SetIcon(null);
-            _itemHandler.PickUpItem(item, transform.localPosition);
+            _itemHandler.PickUpItem(item);
         }
 
         private void OnItemDeleted()

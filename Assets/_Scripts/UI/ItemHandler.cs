@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FeelFreeGames.Evaluation.UI
 {
+    /// <inheritdoc cref="IItemHandler"/>
     public class ItemHandler : IItemHandler, IItemHandlerEvents
     {
         #region Event Args
@@ -74,25 +75,29 @@ namespace FeelFreeGames.Evaluation.UI
             _settings = settings;
         }
         
+        /// <inheritdoc />
         void IItemHandler.SelectSlot(Vector3 position)
         {
             SelectionMoved?.Invoke(
                 new SelectionAnimationEventArgs(_settings.AnimationDuration, position, _settings.AnimationCurve));
         }
 
-        void IItemHandler.PickUpItem(IItem item, Vector3 position)
+        /// <inheritdoc />
+        void IItemHandler.PickUpItem(IItem item)
         {
             ItemPickedUp?.Invoke(item.Icon, 
                 new ItemAnimationEventArgs(_settings.AnimationDuration, _settings.ItemPickUpHeight, 
                     _settings.ItemPickUpScale, _settings.AnimationCurve));
         }
 
+        /// <inheritdoc />
         void IItemHandler.DropItem(InventorySlotComponent.OnFinishedHandlingItem onFinishedHandlingItem)
         {
             ItemDropped?.Invoke(onFinishedHandlingItem, 
                 new ItemAnimationEventArgs(_settings.AnimationDuration, 0f, 1f, _settings.AnimationCurve));
         }
 
+        /// <inheritdoc />
         void IItemHandler.DeleteItem()
         {
             ItemDeleted?.Invoke();

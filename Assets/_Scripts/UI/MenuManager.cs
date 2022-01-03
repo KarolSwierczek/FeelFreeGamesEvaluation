@@ -4,7 +4,6 @@ using FeelFreeGames.Evaluation.Controllers;
 using FeelFreeGames.Evaluation.Data;
 using FeelFreeGames.Evaluation.Input;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace FeelFreeGames.Evaluation.UI
@@ -113,8 +112,6 @@ namespace FeelFreeGames.Evaluation.UI
             
             input.Disable();
         }
-        
-        
 
         private static IItem[] GetItemsFromIcons(IEnumerable<Sprite> icons)
         {

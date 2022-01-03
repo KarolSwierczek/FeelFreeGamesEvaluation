@@ -65,8 +65,7 @@ namespace FeelFreeGames.Evaluation.UI
 		private event Action ItemPickUpCancelled;
 		private event Action SelectionMoved;
 		#endregion Events
-
-
+		
 		private IInventorySlot SelectedSlot => _slots[_selectedSlotIndex];
 		
 		private int _selectedSlotIndex;
